@@ -5,6 +5,5 @@ export const navItems: { id: Page; label: string }[] = [
   { id: "calendar", label: "Calendar" },
   { id: "tasks", label: "Tasks" },
   { id: "meeting-notes", label: "Meeting Notes" },
-  { id: "dashboard", label: "Dashboard" },
   { id: "settings", label: "Settings" },
 ];

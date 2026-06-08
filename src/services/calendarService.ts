@@ -1,11 +1,30 @@
 import type { CalendarEvent } from "../types/domain";
 import { removeAssistantPrefix } from "./commandService";
+import { extractDateISOFromText } from "./dateService";
+import { extractTimeFromText } from "./timeService";
+
+type CalendarEventUpdateInput = {
+  title?: string;
+  timeText?: string;
+};
+
+function getCalendarScheduleFields(title: string, timeText = "") {
+  const combinedText = `${title} ${timeText}`;
+  const parsedTime = extractTimeFromText(combinedText);
+
+  return {
+    dateISO: extractDateISOFromText(combinedText),
+    timeOfDayText: parsedTime?.timeText ?? "",
+    timeMinutes: parsedTime?.timeMinutes,
+  };
+}
 
 export function buildCalendarEvent(
   title: string,
   timeText: string
 ): CalendarEvent | null {
   const cleanedTitle = title.trim();
+  const cleanedTimeText = timeText.trim();
 
   if (!cleanedTitle) {
     return null;
@@ -14,7 +33,41 @@ export function buildCalendarEvent(
   return {
     id: Date.now(),
     title: cleanedTitle,
-    timeText: timeText.trim() || "No time set",
+    timeText: cleanedTimeText || "No time set",
+    ...getCalendarScheduleFields(cleanedTitle, cleanedTimeText),
+  };
+}
+
+export function applyCalendarEventUpdate(
+  event: CalendarEvent,
+  updates: CalendarEventUpdateInput
+): CalendarEvent {
+  const title = (updates.title ?? event.title).trim();
+  const timeText = (updates.timeText ?? event.timeText).trim() || "No time set";
+
+  return {
+    ...event,
+    title,
+    timeText,
+    ...getCalendarScheduleFields(title, timeText),
+  };
+}
+
+export function normalizeCalendarEvent(event: CalendarEvent): CalendarEvent {
+  const title = event.title ?? "";
+  const timeText = event.timeText || "No time set";
+  const scheduleFields = getCalendarScheduleFields(title, timeText);
+
+  return {
+    ...event,
+    title,
+    timeText,
+    dateISO: event.dateISO || scheduleFields.dateISO,
+    timeOfDayText: event.timeOfDayText || scheduleFields.timeOfDayText,
+    timeMinutes:
+      typeof event.timeMinutes === "number"
+        ? event.timeMinutes
+        : scheduleFields.timeMinutes,
   };
 }
 
@@ -46,8 +99,31 @@ export function findCalendarMatches(raw: string, events: CalendarEvent[]) {
   }
 
   return events.filter((event) => {
-    const searchableText = `${event.title} ${event.timeText}`.toLowerCase();
+    const searchableText = `${event.title} ${event.timeText} ${
+      event.dateISO ?? ""
+    } ${event.timeOfDayText ?? ""}`.toLowerCase();
 
     return tokens.some((token) => searchableText.includes(token));
   });
+}
+
+export function findCalendarEventByQuery(
+  events: CalendarEvent[],
+  query: string
+) {
+  const cleanedQuery = query.trim().toLowerCase();
+
+  if (!cleanedQuery) {
+    return null;
+  }
+
+  return (
+    events.find((event) =>
+      `${event.title} ${event.timeText} ${event.dateISO ?? ""} ${
+        event.timeOfDayText ?? ""
+      }`
+        .toLowerCase()
+        .includes(cleanedQuery)
+    ) ?? null
+  );
 }

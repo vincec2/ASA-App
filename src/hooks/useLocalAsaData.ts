@@ -1,5 +1,7 @@
 import { useEffect, useState } from "react";
 import type { CalendarEvent, MeetingNote, StoredData, TaskItem } from "../types/domain";
+import { normalizeCalendarEvent } from "../services/calendarService";
+import { normalizeTask } from "../services/taskService";
 
 function useLocalAsaData() {
   const [tasks, setTasks] = useState<TaskItem[]>([]);
@@ -26,8 +28,17 @@ function useLocalAsaData() {
 
         if (cancelled) return;
 
-        setTasks(Array.isArray(storedData.tasks) ? (storedData.tasks as TaskItem[]) : []);
-        setEvents(Array.isArray(storedData.events) ? (storedData.events as CalendarEvent[]) : []);
+        setTasks(
+          Array.isArray(storedData.tasks)
+            ? (storedData.tasks as TaskItem[]).map(normalizeTask)
+            : []
+        );
+
+        setEvents(
+          Array.isArray(storedData.events)
+            ? (storedData.events as CalendarEvent[]).map(normalizeCalendarEvent)
+            : []
+        );
         setMeetingNotes(
           Array.isArray(storedData.meetingNotes)
             ? (storedData.meetingNotes as MeetingNote[])

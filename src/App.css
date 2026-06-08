@@ -297,3 +297,197 @@ button:disabled {
   max-height: 420px;
   overflow: auto;
 }
+
+.task-form-row {
+  grid-template-columns: 1fr 240px 180px auto;
+}
+
+.filter-panel {
+  border: 1px solid #d0d0d0;
+  background: #fafafa;
+  padding: 12px;
+  margin: 14px 0;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.filter-panel div {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.filter-panel span {
+  font-weight: bold;
+  margin-right: 4px;
+}
+
+.filter-panel button {
+  border: 1px solid #999;
+  background: #eee;
+  padding: 7px 10px;
+}
+
+.filter-panel button.active-filter {
+  background: #222;
+  color: #fff;
+  border-color: #222;
+}
+
+.filter-panel p {
+  margin: 0;
+  color: #555;
+  font-size: 13px;
+}
+
+.assistant-result-panel {
+  margin-top: 18px;
+  background: #ffffff;
+  border: 1px solid #d0d0d0;
+  padding: 20px;
+}
+
+.panel-title-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 14px;
+}
+
+.panel-title-row h2 {
+  margin: 0;
+}
+
+.day-plan-section {
+  border-top: 1px solid #ddd;
+  padding-top: 14px;
+  margin-top: 14px;
+}
+
+.day-plan-section h3 {
+  margin: 0 0 10px;
+}
+
+.day-plan-section ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.day-plan-section li {
+  border: 1px solid #ddd;
+  background: #fafafa;
+  padding: 12px;
+  margin-bottom: 8px;
+}
+
+.day-plan-section li strong {
+  display: block;
+  margin-bottom: 4px;
+}
+
+.day-plan-section li span {
+  display: block;
+  color: #555;
+  font-size: 13px;
+}
+
+.empty-text-inline {
+  color: #666;
+  margin: 0;
+}
+
+.edit-row {
+  display: grid;
+  grid-template-columns: 1fr 240px 160px auto auto;
+  gap: 8px;
+  width: 100%;
+  align-items: center;
+}
+
+.edit-row input,
+.edit-row select {
+  border: 1px solid #aaa;
+  padding: 8px;
+  font: inherit;
+  background: #fff;
+}
+
+.undo-status {
+  margin: 8px 0 0;
+  color: #555;
+  font-size: 13px;
+}
+
+.due-now-banner {
+  border-bottom: 1px solid #d0d0d0;
+  background: #fff8df;
+  padding: 12px 24px;
+}
+
+.due-now-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+}
+
+.due-now-header strong {
+  display: block;
+}
+
+.due-now-header span {
+  display: block;
+  margin-top: 2px;
+  color: #555;
+  font-size: 13px;
+}
+
+.due-now-list {
+  display: grid;
+  gap: 8px;
+  margin-top: 10px;
+}
+
+.due-now-item {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  border: 1px solid #e0c76c;
+  background: #fffdf3;
+  padding: 10px;
+}
+
+.due-now-item strong {
+  display: block;
+}
+
+.due-now-item span {
+  display: block;
+  margin-top: 3px;
+  color: #555;
+  font-size: 13px;
+}
+
+.due-now-actions {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+.due-now-more {
+  margin: 0;
+  color: #555;
+  font-size: 13px;
+}
+
+.due-now-actions {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+}
